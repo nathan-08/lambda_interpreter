@@ -11,15 +11,13 @@ data Node = NameNode [Char]
 expr ((Name name):xs) = (Just (Expression (NameNode name)), xs)
 expr (lexms) =
     let (func, rest) = function(lexms)
-    in
-      case func of
+    in case func of
       Just f -> (Just (Expression f), rest)
       Nothing -> 
-           let (maybe_app, rest) = application(lexms)
-           in case maybe_app of
-             Just app -> (Just (Expression app), rest)
-             Nothing -> (Nothing, [])
---expr xs = (Nothing, [])
+        let (maybe_app, rest) = application(lexms)
+        in case maybe_app of
+          Just app -> (Just (Expression app), rest)
+          Nothing -> (Nothing, [])
 
 function (Lambda:(Name name):Dot:xs) =
   let (maybe_exp, rest) = expr(xs)
@@ -31,12 +29,14 @@ function _ = (Nothing, [])
 application (LParen:xs) = 
   let (maybe_fexpr, rest) = expr(xs)
   in case maybe_fexpr of
+    Nothing -> (Nothing, [])
     Just fexpr -> 
       let (maybe_argexpr, rest') = expr(tail rest)
       in case maybe_argexpr of
-        Just argexpr -> if isSpace (head rest) then (Just (Application fexpr argexpr), tail rest') else (Nothing, [])
         Nothing -> (Nothing, [])
-    Nothing -> (Nothing, [])
+        Just argexpr -> if isSpace (head rest)
+                        then (Just (Application fexpr argexpr), tail rest')
+                        else (Nothing, [])
 application _ = (Nothing, [])
 
 
