@@ -1,1 +1,1 @@
-(λx.x λfirst.λsecond.second)
+(λx.(x x) λfirst.λsecond.second)
