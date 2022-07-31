@@ -1,4 +1,13 @@
 --λ 
+module Lexer
+( isSpace
+, Lexeme (Name, Lambda, Dot, LParen)
+, isLParen
+, isRParen 
+, lexfn 
+, rstrip 
+, readdat 
+) where
 readdat = readFile "input.dat"
 
 rstrip str = 
@@ -7,6 +16,13 @@ rstrip str =
         p (' ':xs) = p xs
         p ('\n':xs) = p xs
         p rest = (reverse rest)
+
+isSpace Space = True
+isSpace _ = False
+isLParen LParen = True
+isLParen _ = False
+isRParen RParen = True
+isRParen _ = False
 
 data Lexeme = Lambda
             | LParen

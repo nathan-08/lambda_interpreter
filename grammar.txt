@@ -4,4 +4,7 @@
 <function expression> = <expression>
 <argument expression> = <expression>
 
+terminals are:
+<name>
+
 (Lx.x x)
