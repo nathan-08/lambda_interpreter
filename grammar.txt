@@ -1,0 +1,7 @@
+<expression> = <name> | <function> | <application>
+<function> = λ<name>.<expression>
+<application> = (<function expresson> <argument expression>)
+<function expression> = <expression>
+<argument expression> = <expression>
+
+(Lx.x x)
