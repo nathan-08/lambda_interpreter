@@ -1,6 +1,7 @@
 module Parser
 ( parse
 , beta_reduce
+, to_string
 ) where
 import Lexer
 
@@ -74,3 +75,9 @@ apply parm arg body =
             (apply parm arg e1)
             (apply parm arg e2))
 
+to_string :: Expression -> String
+to_string (NameExpr name) = name
+to_string (Function parm body)=
+  "λ" ++ parm ++ "." ++ (to_string body)
+to_string (Application e1 e2) =
+  "(" ++ (to_string e1) ++ " " ++ (to_string e2) ++ ")"

@@ -1,1 +1,3 @@
-(λx.(x x) λa.λb.a)
+--lines may be commented out this way.
+--(λf.λa.(f a) λs.(s s))
+(λf.(f f) λa.λb.a)

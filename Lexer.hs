@@ -48,6 +48,11 @@ lexfn ('.':xs) = Dot    : (lexfn xs)
 lexfn ('(':xs) = LParen : (lexfn xs)
 lexfn (')':xs) = RParen : (lexfn xs)
 lexfn (' ':xs) = Space  : (lexfn xs)
+lexfn ('-':'-':xs) = -- ignore commented line
+  lexfn (skip_line xs)
+  where skip_line [] = []
+        skip_line ('\n':xs) = xs
+        skip_line (x:xs) = skip_line xs
 lexfn (x:xs) =
   let (first, rest) = split_word xs
       name = x : first

@@ -11,6 +11,8 @@ main = do
         Just ast -> Just (beta_reduce ast)
         Nothing -> Nothing
   case reduced of
-    Just r -> print r
+    Just r -> putStrLn (to_string r)
     Nothing -> print "something went wrong"
+
+
 
