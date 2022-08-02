@@ -54,12 +54,19 @@ application _ = (Nothing, [])
 --beta reduction
 --find and eliminate Application expressions
 beta_reduce :: Expression -> Expression
-beta_reduce (Application (Function parm body) arg) =
-  case arg of
-    Application _ _ -> apply parm (beta_reduce arg) body
-    _ -> apply parm arg body
+beta_reduce (Application app@(Application e1 e2) arg) =
+  beta_reduce (Application (beta_reduce app) arg)
 
-beta_reduce x = x
+beta_reduce (Application n@(NameExpr _) arg) =
+  Application n (beta_reduce arg)
+
+beta_reduce (Application (Function parm body) arg) =
+  beta_reduce (apply parm arg body)
+
+beta_reduce (Function parm body) =
+  Function parm (beta_reduce body)
+
+beta_reduce n@(NameExpr _) = n
   
 apply :: String -> Expression -> Expression -> Expression
 apply parm arg body =
@@ -71,9 +78,9 @@ apply parm arg body =
       Function p (apply parm arg b)
 
     Application e1 e2 ->
-      beta_reduce (Application
-            (apply parm arg e1)
-            (apply parm arg e2))
+      (Application
+        (apply parm arg e1)
+        (apply parm arg e2))
 
 to_string :: Expression -> String
 to_string (NameExpr name) = name

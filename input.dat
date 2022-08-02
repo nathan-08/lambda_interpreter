@@ -1,3 +1,18 @@
---lines may be commented out this way.
---(λf.λa.(f a) λs.(s s))
-(λf.(f f) λa.λb.a)
+--some definitions
+--(c ? e1 : e2) = λc.λe1.λe2.((c e1) e2)
+--true = select_first = λa.λb.a
+--false = select_second = λa.λb.b
+--((([cond] [true]) e1) e2) --macros like this would be nice
+--NOT(x) = (λx.(((λc.λe1.λe2.((c e1) e2) x) λa.λb.b) λa.λb.b) x)
+--[NOT(x)]:=(λc.λe1.λe2.((c λa.λb.b) λa.λb.a) x) -- or macro like this
+--
+--
+--Not (x) (takes boolean and negates it)
+(λx.(((λcond.λe1.λe2.((cond e1) e2) x) λa.λb.b) λz.λy.z) λc.λd.c)
+--
+--
+--
+--
+--testing stuff
+--λx.(λb.b (λa.a thing))
+--
