@@ -8,7 +8,7 @@
 ; 
 ; 
 ; Not (x) (takes boolean and negates it)
-;(λx.(((λcond.λe1.λe2.((cond e1) e2) x) λa.λb.b) λz.λy.z) λc.λd.c)
+;(λx.(((λcond.λe1.λe2.((cond e1) e2) x) λa.λb.b) λz.λy.z) λc.λd.d)
 ; 
 ;===========;
 ; And (a,b) ;
@@ -17,8 +17,30 @@
 ;===========;
 ;((λa.λb.(b a) world) (λx.x hello))
 ;((1 2) ((((λx.x λa.λb.a) (3 4)) 1st) 2nd))
-((λa.λb.(b a) world) hello)
+;((λa.λb.(b a) world) hello)
+;
+;((λa.λx.(x a) 32) λb.(b a))
+;(λa.λx.(x a) 32)
+;(λa.(λb.(b a) a) 32)
 ; 
 ; testing stuff
 ; λx.(λb.b (λa.a thing))
 ; 
+;(((λa.λb.λc.(a b) λc2.(b2 c2)) hot) dog)
+;((λfunc.λarg.(func arg) arg') boing)
+;((λf.λa.(f a) λx.(x a_)) 32)
+;(λa.(λb.(b a) λx.x) λy.(y b_))
+;
+;((^func.^arg.(func arg) arg) _arg)
+;(^arg.(func arg) func)
+;^x.(y x)
+;
+;
+;
+;
+;((^func.^arg.(func arg) arg) 3)
+;((^func.^arg.(func z) z) 3)
+;(^x.(x y) y)
+;(() ^x.(x x))
+;Application(Function Expression)
+((^func.^arg.(func arg) myFunc) myArg)

@@ -48,6 +48,7 @@ skip_line (x:xs) = skip_line xs
 
 lexfn [] = []
 lexfn ('λ':xs) = Lambda : (lexfn xs)
+lexfn ('^':xs) = Lambda : (lexfn xs)
 lexfn ('.':xs) = Dot    : (lexfn xs)
 lexfn ('(':xs) = LParen : (lexfn xs)
 lexfn (')':xs) = RParen : (lexfn xs)

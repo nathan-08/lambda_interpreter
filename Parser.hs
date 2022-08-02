@@ -92,3 +92,4 @@ to_string (Function parm body)=
   "λ" ++ parm ++ "." ++ (to_string body)
 to_string (Application e1 e2) =
   "(" ++ (to_string e1) ++ " " ++ (to_string e2) ++ ")"
+
