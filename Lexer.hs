@@ -52,7 +52,7 @@ lexfn ('.':xs) = Dot    : (lexfn xs)
 lexfn ('(':xs) = LParen : (lexfn xs)
 lexfn (')':xs) = RParen : (lexfn xs)
 lexfn (' ':xs) = Space  : (lexfn xs)
-lexfn ('-':'-':xs) = -- ignore commented line
+lexfn (';':xs) = -- ignore commented line
   lexfn (skip_line xs)
 lexfn (x:xs) =
   let (first, rest) = split_word xs

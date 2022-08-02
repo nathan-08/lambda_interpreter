@@ -52,25 +52,29 @@ application (LParen:xs) =
 application _ = (Nothing, [])
 
 --beta reduction
---find and eliminate Application expressions
-beta_reduce :: Expression -> Expression
-beta_reduce (Application app@(Application e1 e2) arg) =
-  beta_reduce (Application (beta_reduce app) arg)
+beta_reduce :: Expression -> (Bool, Expression)
 
-beta_reduce (Application n@(NameExpr _) arg) =
-  Application n (beta_reduce arg)
+beta_reduce (Application app@(Application _ _) arg) =
+  let (b, app') = beta_reduce app
+      (b', arg') = beta_reduce arg
+  in if b || b' then beta_reduce (Application app' arg')
+  else (False, Application app' arg')
 
 beta_reduce (Application (Function parm body) arg) =
-  beta_reduce (apply parm arg body)
+  (True, snd(beta_reduce (apply parm arg body)))
 
 beta_reduce (Function parm body) =
-  Function parm (beta_reduce body)
-
-beta_reduce n@(NameExpr _) = n
+  let (b, body') = beta_reduce body
+  in (b, Function parm body')
   
+beta_reduce (Application n@(NameExpr _) arg) =
+  let (b, arg') = beta_reduce arg
+  in (b, Application n arg')
+
+beta_reduce n@(NameExpr _) = (False, n)
+
 apply :: String -> Expression -> Expression -> Expression
 apply parm arg body =
-  --replace instances of NameExpr parm in body with arg
   case body of
     NameExpr name -> if name == parm then arg else body
 
